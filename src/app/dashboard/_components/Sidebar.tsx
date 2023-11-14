@@ -1,10 +1,10 @@
 import { Icons } from "@/components/icons";
 
 const sideIcons = {
-  one: <Icons.product />,
-  two: <Icons.productTwo />,
-  three: <Icons.productThree />,
-  four: <Icons.productFour />,
+  one: <Icons.product data-testid="product-icon" />,
+  two: <Icons.productTwo data-testid="productTwo-icon" />,
+  three: <Icons.productThree data-testid="productThree-icon" />,
+  four: <Icons.productFour data-testid="productFour-icon" />,
 };
 
 export function Sidebar() {

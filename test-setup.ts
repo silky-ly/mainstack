@@ -1,5 +1,6 @@
 import { afterEach, expect, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 vi.mock("next/navigation", async () => ({
   ...((await vi.importActual("next/navigation")) as object),

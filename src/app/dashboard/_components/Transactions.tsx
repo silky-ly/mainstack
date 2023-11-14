@@ -10,7 +10,6 @@ import {
   MultiSelect,
   Separator,
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -119,8 +118,6 @@ export function Transactions({
     return found;
   }, [transactions, transactionType, transactionStatus]);
 
-  console.log(withFiltersAppliedTransactions);
-
   return (
     <section className="mt-20 px-10">
       <div className="flex justify-between">
@@ -153,7 +150,7 @@ export function Transactions({
             <SheetContent className="rounded-3xl">
               <SheetHeader>
                 <SheetTitle className="mb-3 text-2xl font-bold [letter-spacing:-0.6px] text-[#131316]">
-                  Filter
+                  Filters
                 </SheetTitle>
 
                 <SheetDescription className="flex justify-between gap-3 overflow-scroll no-scrollbar">
@@ -254,7 +251,10 @@ export function Transactions({
 
       {loading ? (
         <div className="flex justify-center items-center mt-24">
-          <Icons.spinner className="h-26 w-26 animate-spin" />
+          <Icons.spinner
+            className="h-26 w-26 animate-spin"
+            data-testid="spinner"
+          />
         </div>
       ) : withFiltersAppliedTransactions!.length <= 0 ? (
         <EmptyData />
@@ -294,7 +294,10 @@ export function Transactions({
                 </div>
 
                 <div className="w-36 text-end">
-                  <p className="text-base font-bold [letter-spacing:-0.2px] text-[#131316]">
+                  <p
+                    className="text-base font-bold [letter-spacing:-0.2px] text-[#131316]"
+                    data-testid={`usd-${index}`}
+                  >
                     {`USD ${transaction?.amount}`}
                   </p>
 

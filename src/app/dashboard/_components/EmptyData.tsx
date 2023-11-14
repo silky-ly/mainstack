@@ -4,7 +4,7 @@ import { Button } from "@/components/ui";
 export function EmptyData() {
   return (
     <section className="w-[30%] my-20 mx-auto flex flex-col gap-6 justify-center items-start">
-      <Icons.emptyHistory />
+      <Icons.emptyHistory data-testid="empty-history-icon" />
 
       <div className="w-11/12">
         <h1 className="mb-2 text-[28px] leading-10 font-bold [letter-spacing:-0.6px] text-[#131316]">

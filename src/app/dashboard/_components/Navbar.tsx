@@ -88,12 +88,13 @@ export function Navbar({
 
   return (
     <div className="w-full h-14 mt-4 m-auto px-5 grid sm:grid-cols-4 items-center rounded-full shadow-md bg-white">
-      <Icons.logo className="col-span-1 cursor-pointer" />
+      <Icons.logo data-testid="logo" className="col-span-1 cursor-pointer" />
 
       <div className="col-span-2 w-[88%] flex justify-evenly items-center">
-        {links.map((link) => (
+        {links.map((link, index) => (
           <Link
             key={link.title}
+            data-testid={`nav-link-${index}`}
             href={link.to}
             className={cn(
               "inline-flex gap-x-1 px-6 h-10 items-center mx-auto cursor-pointer text-sm text-center font-semibold tracking-tight ease-in duration hover:rounded-full hover:bg-[#EFF1F6] text-[#56616B]",
@@ -109,10 +110,10 @@ export function Navbar({
 
       <div className="w-full col-span-1 flex justify-end items-center gap-3">
         <div className="w-1/6 flex justify-between items-center">
-          <Link href={"/"}>
+          <Link href={"/"} data-testid="notifications">
             <Icons.notification />
           </Link>
-          <Link href={"/"}>
+          <Link href={"/"} data-testid="chat">
             <Icons.chat />
           </Link>
         </div>
@@ -152,8 +153,12 @@ export function Navbar({
             </DropdownMenuLabel>
 
             <DropdownMenuGroup className="mt-4 flex flex-col gap-6">
-              {profiles.map((profile) => (
-                <DropdownMenuItem key={profile.title} className="items-center">
+              {profiles.map((profile, index) => (
+                <DropdownMenuItem
+                  key={profile.title}
+                  className="items-center"
+                  data-testid={`profile-option-${index}`}
+                >
                   {profile.icon} &nbsp; &nbsp;
                   <span className="text-sm text-bold [letter-spacing:-0.2px] text-[#131316]">
                     {profile.title}

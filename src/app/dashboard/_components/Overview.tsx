@@ -3,13 +3,22 @@ import { AppContextType } from "@/lib/context";
 import { format } from "date-fns";
 import { Icons } from "@/components/icons";
 import { Button, Skeleton } from "@/components/ui";
-import { ResponsiveContainer, LineChart, Line, Tooltip, XAxis } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  Tooltip,
+  XAxis,
+  Symbols,
+} from "recharts";
 
 export function Overview({
   wallet,
   transactions,
   loading,
-}: Pick<AppContextType, "transactions" | "wallet"> & { loading?: boolean }) {
+}: Partial<Pick<AppContextType, "transactions" | "wallet">> & {
+  loading?: boolean;
+}) {
   const balances = useMemo(
     () => [
       {
@@ -51,7 +60,7 @@ export function Overview({
             </div>
             <Button
               size={"lg"}
-              className="text-sm font-semibold leading-6 rounded-full px-12 border-[#131316] hover:bg-white hover:text-[#131316] hover:border-[#131316] hover:border"
+              className="text-sm font-semibold leading-6 rounded-full px-12 border-[#131316] hover:bg-[#131316]/90"
               disabled={!wallet || wallet?.balance <= 0}
             >
               Withdraw
@@ -60,11 +69,19 @@ export function Overview({
 
           {loading ? (
             <div className="flex justify-center items-center mt-12">
-              <Icons.spinner className="h-26 w-26 animate-spin" />
+              <Icons.spinner
+                className="h-26 w-26 animate-spin"
+                data-testid="spinner"
+              />
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+              data-testid="line-chart"
+            >
               <LineChart data={transactions} height={100}>
+                <Symbols type="circle" sizeType="area" size={20} />
                 <XAxis
                   allowDataOverflow
                   allowDuplicatedCategory={false}
@@ -80,13 +97,14 @@ export function Overview({
                     fontWeight: "500",
                   }}
                   tickFormatter={(value) => format(new Date(value), "PPP")}
+                  tickSize={20}
                   tickLine={{ stroke: "none" }}
                   axisLine={{
-                    fill: "green",
                     stroke: "#DBDEE5",
                     strokeLinecap: "butt",
                     strokeLinejoin: "round",
                     strokeWidth: "0.5px",
+                    type: "round",
                   }}
                 />
                 <Line
