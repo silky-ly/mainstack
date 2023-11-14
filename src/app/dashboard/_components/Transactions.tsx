@@ -1,9 +1,6 @@
 "use client";
 
-import axios from "axios";
-import useSWR from "swr";
-import { useState } from "react";
-import { BASE_URL } from "@/constants";
+import { useMemo, useState } from "react";
 import { Icons } from "@/components/icons";
 import { EmptyData } from ".";
 import {
@@ -11,21 +8,62 @@ import {
   DatePicker,
   Label,
   MultiSelect,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Separator,
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
+  Skeleton,
 } from "@/components";
+import { AppContextType } from "@/lib/context";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+
+const features = [
+  {
+    value: "deposit",
+    label: "Store Transactions",
+  },
+  {
+    value: "gettipped",
+    label: "Get Tipped ",
+  },
+  {
+    value: "withdrawal",
+    label: "Withdrawals",
+  },
+  {
+    value: "chargebacks",
+    label: "Chargebacks",
+  },
+  {
+    value: "cashbacks",
+    label: "Cashbacks",
+  },
+  {
+    value: "referandearn",
+    label: "Refer & Earn",
+  },
+];
+
+const status = [
+  {
+    value: "successful",
+    label: "Successful",
+  },
+  {
+    value: "pending",
+    label: "Pending",
+  },
+  {
+    value: "failed",
+    label: "Failed",
+  },
+];
 
 const times = [
   {
@@ -51,34 +89,58 @@ const times = [
   },
 ];
 
-const fetcher = async (url: string) =>
-  await axios.get(url).then((response) => response.data);
+export function Transactions({
+  transactions,
+  loading = false,
+}: {
+  transactions?: AppContextType["transactions"];
+  loading?: boolean;
+}) {
+  const [transactionType, setTransactionTypes] = useState<string[]>([]);
+  const [transactionStatus, setTransactionStatus] = useState<string[]>([]);
 
-export function Transactions() {
-  const [selected, setSelected] = useState<string[]>([]);
-  const {
-    data: transactions,
-    error,
-    isLoading,
-  } = useSWR(`${BASE_URL}/transactions`, fetcher);
+  const [isSheetOpen, toggleSheet] = useState<boolean>(false);
 
-  // console.log("TRANSACTIONS", transactions);
-  // console.log("TRANSACTIONS", transactions[0].amount);
+  const withFiltersAppliedTransactions = useMemo(() => {
+    let found = transactions;
+
+    if (transactionType?.length) {
+      found = transactions?.filter((transaction) =>
+        transactionType?.includes(transaction?.type)
+      );
+    }
+
+    if (transactionStatus?.length) {
+      found = transactions?.filter((transaction) =>
+        transactionStatus?.includes(transaction?.status)
+      );
+    }
+
+    return found;
+  }, [transactions, transactionType, transactionStatus]);
+
+  console.log(withFiltersAppliedTransactions);
 
   return (
-    <section className="mt-20">
+    <section className="mt-20 px-10">
       <div className="flex justify-between">
-        <div>
-          <h3 className="text-xl font-bold [letter-spacing:-0.6px] text-[#131316]">
-            24 Transactions
-          </h3>
+        <div className="flex flex-col">
+          <div className="inline-flex items-center">
+            <h3 className="text-2xl font-bold [letter-spacing:-0.6px] text-[#131316]">
+              {loading ? (
+                <Skeleton className="h-3 mt-4 w-full" />
+              ) : (
+                withFiltersAppliedTransactions?.length
+              )}{" "}
+              Transactions
+            </h3>
+          </div>
           <p className="text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]">
             Your transactions for the last 7 days
           </p>
         </div>
-
         <div className="flex">
-          <Sheet>
+          <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
             <SheetTrigger asChild>
               <Button
                 size={"lg"}
@@ -100,7 +162,7 @@ export function Transactions() {
                       key={time.title}
                       size={"sm"}
                       variant="outline"
-                      className="w-full px-[18px] text-sm font-semibold rounded-full [letter-spacing:-0.4px] border-[0.5px] hover:bg-transparent text-[#131316] border-[#EFF1F6]"
+                      className="w-full px-[18px] text-sm font-semibold rounded-full hover:bg-[#EFF1F6] [letter-spacing:-0.4px] border-[0.5px] text-[#131316] border-[#EFF1F6]"
                     >
                       {time.title}
                     </Button>
@@ -132,35 +194,9 @@ export function Transactions() {
                   </Label>
 
                   <MultiSelect
-                    options={[
-                      {
-                        value: "storetransaction",
-                        label: "Store Transactions",
-                      },
-                      {
-                        value: "gettipped",
-                        label: "Get Tipped ",
-                      },
-                      {
-                        value: "withdrawals",
-                        label: "Withdrawals",
-                      },
-                      {
-                        value: "chargebacks",
-                        label: "Chargebacks",
-                      },
-                      {
-                        value: "cashbacks",
-                        label: "Cashbacks",
-                      },
-                      {
-                        value: "referandearn",
-                        label: "Refer & Earn",
-                      },
-                    ]}
-                    selected={selected}
-                    onChange={setSelected}
-                    className=""
+                    options={features}
+                    selected={transactionType}
+                    onChange={setTransactionTypes}
                   />
                 </div>
 
@@ -173,53 +209,41 @@ export function Transactions() {
                   </Label>
 
                   <MultiSelect
-                    options={[
-                      {
-                        value: "successful",
-                        label: "Successful",
-                      },
-                      {
-                        value: "pending",
-                        label: "Pending",
-                      },
-                      {
-                        value: "failed",
-                        label: "Failed",
-                      },
-                    ]}
-                    selected={selected}
-                    onChange={setSelected}
-                    className=""
+                    options={status}
+                    selected={transactionStatus}
+                    onChange={setTransactionStatus}
                   />
                 </div>
               </div>
 
               <SheetFooter>
-                {/* <SheetClose className=""> */}
-                <Button
-                  type="submit"
-                  size={"lg"}
-                  variant="outline"
-                  className="w-full text-base font-semibold rounded-full [letter-spacing:-0.4px] border-[0.5px] hover:bg-transparent text-[#131316] border-[#EFF1F6]"
-                >
-                  Clear
-                </Button>
+                {/* sheet close. */}
+                <div className="w-full grid sm:grid-cols-2 gap-5">
+                  <Button
+                    type="submit"
+                    size={"lg"}
+                    variant="outline"
+                    className="w-full text-base font-semibold rounded-full [letter-spacing:-0.4px] border-[0.5px] hover:bg-transparent text-[#131316] border-[#EFF1F6]"
+                  >
+                    Clear
+                  </Button>
 
-                <Button
-                  type="submit"
-                  size={"lg"}
-                  className="w-full text-base font-semibold rounded-full [letter-spacing:-0.4px] text-white bg-[#131316] hover:bg-[#131316]"
-                >
-                  Apply
-                </Button>
-                {/* </SheetClose> */}
+                  <Button
+                    type="submit"
+                    size={"lg"}
+                    onClick={() => toggleSheet(false)}
+                    className="w-full text-base font-semibold rounded-full [letter-spacing:-0.4px] text-white bg-[#131316] hover:bg-[#131316]"
+                  >
+                    Apply
+                  </Button>
+                </div>
               </SheetFooter>
             </SheetContent>
           </Sheet>
 
           <Button
             size={"lg"}
-            className="items-center font-semibold rounded-full text-[#131316] bg-[#EFF1F6]"
+            className="items-center font-semibold rounded-full text-[#131316] bg-[#EFF1F6] hover:bg-[#EFF1F6]"
           >
             Export List &nbsp; <Icons.export />
           </Button>
@@ -228,44 +252,62 @@ export function Transactions() {
 
       <Separator className="my-4" />
 
-      {/* <EmptyData /> */}
-
-      <div className="flex justify-between">
-        {/* {transactions.map((transaction: any) => ( */}
-        {/* <div key={transaction.amount}> */}
-        <div className="flex">
-          {/* {transaction.type === "deposit" ? (
-            <Icons.incoming />
-          ) : (
-            <Icons.outgoing />
-          )} */}
-          &nbsp; &nbsp;
-          <div>
-            <p className="text-sm font-medium [letter-spacing:-0.2px] [word-spacing:1px] text-[#131316]">
-              {/* {transaction.type === "deposit"
-                ? transaction?.metadata.product_name ||
-                  transaction?.metadata.name
-                : "Cash Withdrawal"} */}
-            </p>
-            <span className="text-xs font-medium [letter-spacing:-0.2px] text-[#56616B]">
-              {/* {transaction?.status || transaction?.metadata.name} */}
-            </span>
-          </div>
+      {loading ? (
+        <div className="flex justify-center items-center mt-24">
+          <Icons.spinner className="h-26 w-26 animate-spin" />
         </div>
+      ) : withFiltersAppliedTransactions!.length <= 0 ? (
+        <EmptyData />
+      ) : (
+        <div className="flex flex-col">
+          {withFiltersAppliedTransactions?.map(
+            (transaction: AppContextType["transactions"][0], index: number) => (
+              <div
+                key={`${index}-${transaction.amount}`}
+                className="flex justify-between mb-8"
+              >
+                <div className="flex">
+                  {transaction.type === "deposit" ? (
+                    <Icons.incoming />
+                  ) : (
+                    <Icons.outgoing />
+                  )}
+                  &nbsp; &nbsp;
+                  <div>
+                    <p className="text-base font-medium [letter-spacing:-0.2px] [word-spacing:1px] text-[#131316]">
+                      {transaction?.type === "deposit"
+                        ? transaction?.metadata?.product_name ||
+                          transaction?.metadata?.name
+                        : "Cash Withdrawal"}
+                    </p>
+                    <span
+                      className={cn(
+                        "text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]",
+                        transaction?.status === "successful" &&
+                          transaction?.type === "withdrawal" &&
+                          "text-[#0EA163]"
+                      )}
+                    >
+                      {transaction?.metadata?.name || transaction?.status}
+                    </span>
+                  </div>
+                </div>
 
-        <div>
-          <p className="text-sm font-bold [letter-spacing:-0.2px] text-[#131316]">
-            {/* {`USD ${transaction.amount}`} */}
-          </p>
+                <div className="w-36 text-end">
+                  <p className="text-base font-bold [letter-spacing:-0.2px] text-[#131316]">
+                    {`USD ${transaction?.amount}`}
+                  </p>
 
-          {/* convert date from 2022-3-03*/}
-          <span className="text-xs font-medium [letter-spacing:-0.2px] text-[#56616B]">
-            {/* {transaction.date} */}
-          </span>
+                  {/* convert date from 2022-3-03*/}
+                  <span className="text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]">
+                    {format(new Date(transaction?.date), "PPP")}
+                  </span>
+                </div>
+              </div>
+            )
+          )}
         </div>
-        {/* </div> */}
-        {/* ))} */}
-      </div>
+      )}
     </section>
   );
 }

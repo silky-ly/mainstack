@@ -59,7 +59,7 @@ export function MultiSelect({
           <div className="flex w-full">
             {selected.map((item) => (
               <div key={item} className="inline-flex items-center">
-                {item}
+                {options?.find((data) => data.value === item)?.label}
                 <button
                   className="ml-1 mr-2 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
@@ -110,12 +110,7 @@ export function MultiSelect({
 
                 <Checkbox
                   id="terms"
-                  // className={cn(
-                  //   "mr-2",
-                  //   selected.includes(option.value)
-                  //     ? "opacity-100"
-                  //     : "opacity-0"
-                  // )}
+                  checked={selected.includes(option.value)}
                 />
 
                 <span className="py-1 text-base font-semibold [letter-spacing:-0.4px] text-[#131316]">

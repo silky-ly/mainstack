@@ -2,11 +2,20 @@
   "name": "mainstack",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@8.10.0",
+  "engines": {
+    "node": ">=18.x"
+  },
   "scripts": {
     "dev": "next dev --port 3002",
+    "analyze": "ANALYZE=true next build",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf node_modules && rm -rf .next",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.4",
@@ -28,20 +37,26 @@
     "react": "^18",
     "react-day-picker": "^8.9.1",
     "react-dom": "^18",
+    "recharts": "^2.9.3",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.1.0",
+    "@testing-library/user-event": "^14.5.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vitest/coverage-v8": "^0.34.6",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.2",
+    "jsdom": "^22.1.0",
     "postcss": "^8",
     "sass": "^1.69.5",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^0.34.6"
   }
 }

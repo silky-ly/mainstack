@@ -1,8 +1,5 @@
-import axios from "axios";
 import Link from "next/link";
-import useSWR from "swr";
 import { usePathname } from "next/navigation";
-import { BASE_URL } from "@/constants";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import {
@@ -82,16 +79,15 @@ const profiles = [
   },
 ];
 
-const fetcher = async (url: string) =>
-  axios.get(url).then((response) => response.data);
-
-export function Navbar() {
+export function Navbar({
+  user,
+}: {
+  user?: { first_name?: string; last_name?: string; email?: string };
+}) {
   const pathname = usePathname();
 
-  const { data: user, error, isLoading } = useSWR(`${BASE_URL}/user`, fetcher);
-
   return (
-    <div className="w-[99%] h-14 mt-4 m-auto px-5 grid sm:grid-cols-4 items-center rounded-full shadow-md bg-white">
+    <div className="w-full h-14 mt-4 m-auto px-5 grid sm:grid-cols-4 items-center rounded-full shadow-md bg-white">
       <Icons.logo className="col-span-1 cursor-pointer" />
 
       <div className="col-span-2 w-[88%] flex justify-evenly items-center">
@@ -113,8 +109,12 @@ export function Navbar() {
 
       <div className="w-full col-span-1 flex justify-end items-center gap-3">
         <div className="w-1/6 flex justify-between items-center">
-          <Icons.notification />
-          <Icons.chat />
+          <Link href={"/"}>
+            <Icons.notification />
+          </Link>
+          <Link href={"/"}>
+            <Icons.chat />
+          </Link>
         </div>
 
         <DropdownMenu>
@@ -122,8 +122,8 @@ export function Navbar() {
             <div className="py-1 pl-[5px] pr-3 inline-flex items-center gap-2 rounded-full cursor-pointer bg-[#EFF1F6]">
               <Avatar>
                 <AvatarFallback className="text-sm text-center font-semibold leading-4 [letter-spacing:-0.4px] text-[#F2F3F5]">
-                  {/* {user.first_name.substring(0, 1)} */}
-                  {/* {user.last_name.substring(0, 1)} */}
+                  {user?.first_name?.substring(0, 1)}
+                  {user?.last_name?.substring(0, 1)}
                 </AvatarFallback>
               </Avatar>
               <Icons.menu />
@@ -135,17 +135,17 @@ export function Navbar() {
               <div className="flex gap-3">
                 <Avatar className="h-10 w-10">
                   <AvatarFallback className="text-base text-center font-semibold leading-4 [letter-spacing:-0.4px] text-[#F2F3F5]">
-                    {/* {user.first_name.substring(0, 1)} */}
-                    {/* {user.last_name.substring(0, 1)} */}
+                    {user?.first_name?.substring(0, 1)}
+                    {user?.last_name?.substring(0, 1)}
                   </AvatarFallback>
                 </Avatar>
 
                 <div>
                   <p className="text-base font-bold [letter-spacing:-0.2px] text-[#131316]">
-                    {/* {user.first_name} {user.last_name} */}
+                    {user?.first_name} {user?.last_name}
                   </p>
                   <span className="text-xs font-medium tracking-tight text-[#56616B]">
-                    {/* {user.email} */}
+                    {user?.email}
                   </span>
                 </div>
               </div>

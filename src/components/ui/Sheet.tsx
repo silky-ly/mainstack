@@ -92,13 +92,7 @@ const SheetFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn(
-      "w-[90%] absolute bottom-8 mx-auto flex gap-5 sm:justify-between bg-red-200",
-      className
-    )}
-    {...props}
-  />
+  <div className={cn("relative top-[350px]", className)} {...props} />
 );
 SheetFooter.displayName = "SheetFooter";
 
