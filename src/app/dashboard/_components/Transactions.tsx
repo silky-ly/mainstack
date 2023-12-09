@@ -145,7 +145,8 @@ export function Transactions({
                 className="mr-3 items-center align-middle font-semibold rounded-full hover:bg-[#EFF1F6] text-[#131316] bg-[#EFF1F6]"
               >
                 Filter &nbsp;{" "}
-                {withFiltersAppliedTransactions ? (
+                {transactionType.length !== 0 ||
+                transactionStatus.length !== 0 ? (
                   <Badge>{withFiltersAppliedTransactions?.length}</Badge>
                 ) : null}
                 &nbsp; <Icons.expand />
