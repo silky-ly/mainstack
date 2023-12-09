@@ -1,9 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Icons } from "@/components/icons";
+import { AppContextType } from "@/lib/context";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { EmptyData } from ".";
+import { Icons } from "@/components/icons";
 import {
+  Badge,
   Button,
   DatePicker,
   Label,
@@ -18,9 +22,6 @@ import {
   SheetTrigger,
   Skeleton,
 } from "@/components";
-import { AppContextType } from "@/lib/context";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 const features = [
   {
@@ -143,7 +144,11 @@ export function Transactions({
                 size={"lg"}
                 className="mr-3 items-center align-middle font-semibold rounded-full hover:bg-[#EFF1F6] text-[#131316] bg-[#EFF1F6]"
               >
-                Filter &nbsp; <Icons.expand />
+                Filter &nbsp;{" "}
+                {withFiltersAppliedTransactions ? (
+                  <Badge>{withFiltersAppliedTransactions?.length}</Badge>
+                ) : null}
+                &nbsp; <Icons.expand />
               </Button>
             </SheetTrigger>
 
@@ -303,7 +308,7 @@ export function Transactions({
 
                   {/* convert date from 2022-3-03*/}
                   <span className="text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]">
-                    {format(new Date(transaction?.date), "PPP")}
+                    {format(new Date(transaction?.date), "PP").toString()}
                   </span>
                 </div>
               </div>

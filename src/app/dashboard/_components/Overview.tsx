@@ -96,7 +96,7 @@ export function Overview({
                     fontSize: "12px",
                     fontWeight: "500",
                   }}
-                  tickFormatter={(value) => format(new Date(value), "PPP")}
+                  tickFormatter={(value) => format(new Date(value), "PP")}
                   tickSize={20}
                   tickLine={{ stroke: "none" }}
                   axisLine={{
