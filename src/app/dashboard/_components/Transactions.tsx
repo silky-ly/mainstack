@@ -142,15 +142,15 @@ export function Transactions({
             <SheetTrigger asChild>
               <Button
                 size={"lg"}
-                className="mr-3 items-center align-middle font-semibold rounded-full hover:bg-[#EFF1F6] text-[#131316] bg-[#EFF1F6]"
+                className="mr-3 items-center justify-center font-semibold rounded-full hover:bg-[#EFF1F6] text-[#131316] bg-[#EFF1F6]"
               >
                 Filter
                 {transactionType.length !== 0 ||
                 transactionStatus.length !== 0 ? (
-                  <Badge>
-                    {" "}
-                    &nbsp; {withFiltersAppliedTransactions?.length}
-                  </Badge>
+                  <>
+                    &nbsp;
+                    <Badge>{withFiltersAppliedTransactions?.length}</Badge>
+                  </>
                 ) : null}
                 &nbsp; <Icons.expand />
               </Button>
@@ -159,7 +159,7 @@ export function Transactions({
             <SheetContent className="rounded-3xl">
               <SheetHeader>
                 <SheetTitle className="mb-3 text-2xl font-bold [letter-spacing:-0.6px] text-[#131316]">
-                  Filters
+                  Filter
                 </SheetTitle>
 
                 <SheetDescription className="flex justify-between gap-3 overflow-scroll no-scrollbar">
