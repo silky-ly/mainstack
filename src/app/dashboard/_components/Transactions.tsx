@@ -55,22 +55,24 @@ export function Transactions({
 
   return (
     <section className="mt-20 px-10">
-      <div className="flex justify-between">
+      <div className="flex justify-between  sm:h-[72px]">
         <div className="flex flex-col">
           <div className="inline-flex items-center">
-            <h3 className="text-2xl font-bold text-[#131316] [letter-spacing:-0.6px]">
+            <h3 className="align-base inline-flex w-full items-baseline gap-1 text-2xl font-bold text-[#131316] [letter-spacing:-0.6px]">
               {loading ? (
-                <Skeleton className="mt-4 h-3 w-full" />
+                <Skeleton className="my-1 h-6 w-full rounded-[2px]" />
               ) : (
-                withFiltersAppliedTransactions?.length
-              )}{" "}
-              Transactions
+                <span>
+                  {withFiltersAppliedTransactions?.length} Transactions
+                </span>
+              )}
             </h3>
           </div>
           <p className="text-sm font-medium text-[#56616B] [letter-spacing:-0.2px]">
             Your transactions for the last 7 days
           </p>
         </div>
+
         <div className="flex">
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
@@ -90,7 +92,7 @@ export function Transactions({
               </Button>
             </SheetTrigger>
 
-            <SheetContent className="rounded-3xl">
+            <SheetContent className="!max-w-[456px] rounded-3xl">
               <SheetHeader>
                 <SheetTitle className="mb-3 text-2xl font-bold text-[#131316] [letter-spacing:-0.6px]">
                   Filter
@@ -119,7 +121,7 @@ export function Transactions({
                     Date Range
                   </Label>
 
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                  <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
                     <DatePicker />
                     <DatePicker />
                   </div>
@@ -190,7 +192,7 @@ export function Transactions({
         </div>
       </div>
 
-      <Separator className="my-4" />
+      <Separator className="mb-4" />
 
       {loading ? (
         <div className="mt-24 flex items-center justify-center">

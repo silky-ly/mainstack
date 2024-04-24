@@ -22,7 +22,7 @@ export function Navbar({
   const pathname = usePathname();
 
   return (
-    <div className="m-auto mt-4 grid h-14 w-full items-center rounded-full bg-white px-5 shadow-md sm:grid-cols-4">
+    <div className="z-30 m-auto mt-4 grid h-14 w-full items-center rounded-full bg-white px-5 shadow-md sm:grid-cols-4">
       <Icons.Logo data-testid="logo" className="col-span-1 cursor-pointer" />
 
       <div className="col-span-2 flex w-[88%] items-center justify-evenly">
@@ -71,8 +71,8 @@ export function Navbar({
               <div className="flex gap-3">
                 <Avatar className="h-10 w-10">
                   <AvatarFallback className="text-center text-base font-semibold leading-4 text-[#F2F3F5] [letter-spacing:-0.4px]">
-                    {user?.first_name?.substring(0, 1)}
-                    {user?.last_name?.substring(0, 1)}
+                    {user?.first_name?.charAt(0)}
+                    {user?.last_name?.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
 
@@ -87,11 +87,11 @@ export function Navbar({
               </div>
             </DropdownMenuLabel>
 
-            <DropdownMenuGroup className="mt-4 flex flex-col gap-6">
+            <DropdownMenuGroup className="mt-4 flex flex-col gap-5">
               {profiles.map((profile, index) => (
                 <DropdownMenuItem
                   key={profile.title}
-                  className="items-center"
+                  className="cursor-pointer items-center py-3 ease-in"
                   data-testid={`profile-option-${index}`}
                 >
                   {profile.icon} &nbsp; &nbsp;

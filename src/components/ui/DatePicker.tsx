@@ -3,6 +3,7 @@
 import * as React from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { Icons } from "../icons/icons";
 import {
   Button,
   Calendar,
@@ -10,7 +11,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui";
-import { Icons } from "../icons/icons";
 
 export function DatePicker() {
   const [date, setDate] = React.useState<Date>(new Date());
@@ -25,11 +25,12 @@ export function DatePicker() {
             !date && "text-muted-foreground",
           )}
         >
-          {date ? format(date, "PP") : <span>Pick a date</span>}
+          {date ? format(date, "dd MMM yyyy") : <span>Pick a date</span>}
           <Icons.ArrowDown />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+
+      <PopoverContent side="bottom" align="start" className="w-[410px] p-0">
         <Calendar
           mode="single"
           selected={date}

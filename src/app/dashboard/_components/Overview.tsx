@@ -42,16 +42,16 @@ export function Overview({
   );
 
   return (
-    <section className="grid gap-20 px-10 pt-12 sm:grid-cols-3">
+    <section className="grid gap-20 px-10 pt-12 sm:h-[400px] sm:grid-cols-3">
       <div className="col-span-2 flex flex-col">
-        <div className="mb-5 flex w-2/4 items-center justify-between">
+        <div className="mb-5 flex max-h-fit w-2/4 items-center justify-between">
           <div className="flex flex-col">
             <p className="text-xs font-medium leading-4 text-[#56616B]">
               Available Balance
             </p>
             <h2 className="mt-3 block text-[2.25rem] font-bold leading-9 text-[#131316]">
               {loading ? (
-                <Skeleton className="mt-4 h-3 w-full" />
+                <Skeleton className="mt-1 h-8 w-full" />
               ) : (
                 `USD ${wallet?.balance}`
               )}
@@ -127,7 +127,7 @@ export function Overview({
         )}
       </div>
 
-      <div className="col-span-1 ml-16 flex flex-col justify-between">
+      <div className="col-span-1 ml-16 flex h-full flex-col justify-between">
         {balances.map((balance) => (
           <div key={balance.title} className="flex flex-col">
             <div className="flex items-center justify-between">
@@ -138,7 +138,7 @@ export function Overview({
             </div>
             <h2 className="mb-4 mt-2 block text-[1.75rem] font-bold leading-9 tracking-tight text-[#131316]">
               {loading ? (
-                <Skeleton className="mb-5 mt-4 h-3 w-full" />
+                <Skeleton className="mt-1 h-8 w-3/5" />
               ) : (
                 `USD ${balance?.amount}`
               )}
