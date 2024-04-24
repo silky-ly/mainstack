@@ -18,9 +18,6 @@ export default function DashboardLayout({
   const { data: user } = useSWR<AppContextType["user"], AxiosError>(
     `${BASE_URL}/user`,
     fetcher,
-    {
-      refreshInterval: 4000,
-    },
   );
 
   return (

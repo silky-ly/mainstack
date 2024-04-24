@@ -41,6 +41,8 @@ export function Overview({
     [wallet],
   );
 
+  const reverseTransactions = transactions && [...transactions].reverse();
+
   return (
     <section className="grid gap-20 px-10 pt-12 sm:h-[400px] sm:grid-cols-3">
       <div className="col-span-2 flex flex-col">
@@ -79,11 +81,10 @@ export function Overview({
             height="100%"
             data-testid="line-chart"
           >
-            <LineChart data={transactions} height={100}>
+            <LineChart data={reverseTransactions} height={100}>
               <Symbols type="circle" sizeType="area" size={20} />
               <XAxis
                 allowDataOverflow
-                allowDuplicatedCategory={false}
                 dataKey="date"
                 interval="preserveStartEnd"
                 type="category"
@@ -114,7 +115,7 @@ export function Overview({
                 activeDot={false}
                 dot={false}
                 animationEasing="ease-in-out"
-                animationDuration={1700}
+                animationDuration={2000}
               />
               <Tooltip
                 formatter={(value, name, props) => {

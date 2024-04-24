@@ -53,6 +53,8 @@ export function Transactions({
     return found;
   }, [transactions, transactionType, transactionStatus]);
 
+  console.log(withFiltersAppliedTransactions, "applied");
+
   return (
     <section className="mt-20 px-10">
       <div className="flex justify-between  sm:h-[72px]">

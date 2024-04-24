@@ -49,7 +49,7 @@ export function MultiSelect({
           aria-expanded={open}
           onClick={() => setOpen(!open)}
           className={cn(
-            "h-12 w-full justify-between rounded-xl border border-[#EFF1F6] bg-[#EFF1F6] px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-[#131316] focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+            "h-12 w-full justify-between rounded-xl border-[1px] border-[#EFF1F6] bg-[#EFF1F6] px-3 py-2 text-sm placeholder:text-muted-foreground focus:border-[3px] focus:border-[#131316] focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
           )}
         >
           <div className="no-scrollbar flex w-full overflow-x-auto">

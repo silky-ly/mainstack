@@ -19,9 +19,7 @@ export default function Page() {
   const { data: wallet, isLoading: isWalletLoading } = useSWR<
     AppContextType["wallet"],
     AxiosError
-  >(`${BASE_URL}/wallet`, fetcher, {
-    refreshInterval: 4000,
-  });
+  >(`${BASE_URL}/wallet`, fetcher);
 
   const sortedTransactions = useMemo(
     () =>
@@ -43,7 +41,7 @@ export default function Page() {
         <Overview
           wallet={wallet}
           loading={isWalletLoading}
-          transactions={transactions}
+          transactions={sortedTransactions}
         />
 
         <Transactions
