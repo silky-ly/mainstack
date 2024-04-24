@@ -1,7 +1,7 @@
 type IconProps = React.HTMLAttributes<SVGElement> & { isactive?: boolean };
 
 export const Icons = {
-  spinner: (props: IconProps) => (
+  Spinner: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="50"
@@ -17,7 +17,7 @@ export const Icons = {
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>
   ),
-  logo: (props: IconProps) => (
+  Logo: (props: IconProps) => (
     <svg
       width="36"
       height="36"
@@ -48,7 +48,7 @@ export const Icons = {
       />
     </svg>
   ),
-  home: (props: IconProps) => (
+  Home: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -76,7 +76,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  analytics: (props: IconProps) => (
+  Analytics: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -104,7 +104,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  revenue: (props: IconProps) => (
+  Revenue: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -132,7 +132,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  crm: (props: IconProps) => (
+  Crm: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -160,7 +160,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  apps: (props: IconProps) => (
+  Apps: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -188,7 +188,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  notification: (props: IconProps) => (
+  Notification: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -216,7 +216,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  chat: (props: IconProps) => (
+  Chat: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -244,7 +244,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  info: (props: IconProps) => (
+  Info: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -272,7 +272,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  incoming: (props: IconProps) => (
+  Incoming: (props: IconProps) => (
     <svg
       width="49"
       height="49"
@@ -301,7 +301,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  outgoing: (props: IconProps) => (
+  Outgoing: (props: IconProps) => (
     <svg
       width="49"
       height="49"
@@ -330,7 +330,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  menu: (props: IconProps) => (
+  Menu: (props: IconProps) => (
     <svg
       width="24"
       height="24"
@@ -358,7 +358,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  close: (props: IconProps) => (
+  Close: (props: IconProps) => (
     <svg
       width="24"
       height="24"
@@ -386,7 +386,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  arrowDown: (props: IconProps) => (
+  ArrowDown: (props: IconProps) => (
     <svg
       width="10"
       height="6"
@@ -401,7 +401,7 @@ export const Icons = {
       />
     </svg>
   ),
-  settings: (props: IconProps) => (
+  Settings: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -418,7 +418,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  purchaseHistory: (props: IconProps) => (
+  PurchaseHistory: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -432,8 +432,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-
-  refer: (props: IconProps) => (
+  Refer: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -447,7 +446,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  integrations: (props: IconProps) => (
+  Integrations: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -474,7 +473,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  reportBug: (props: IconProps) => (
+  ReportBug: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -488,7 +487,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  switchAccount: (props: IconProps) => (
+  SwitchAccount: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -502,7 +501,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  signOut: (props: IconProps) => (
+  SignOut: (props: IconProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="1em"
@@ -516,7 +515,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  emptyHistory: (props: IconProps) => (
+  EmptyHistory: (props: IconProps) => (
     <svg
       width="48"
       height="48"
@@ -573,7 +572,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  export: (props: IconProps) => (
+  Export: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -600,7 +599,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  expand: (props: IconProps) => (
+  Expand: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -627,7 +626,7 @@ export const Icons = {
       </g>
     </svg>
   ),
-  product: (props: IconProps) => (
+  Product: (props: IconProps) => (
     <svg
       width="24"
       height="24"
@@ -689,8 +688,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-
-  productTwo: (props: IconProps) => (
+  ProductTwo: (props: IconProps) => (
     <svg
       width="20"
       height="22"
@@ -748,7 +746,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  productThree: (props: IconProps) => (
+  ProductThree: (props: IconProps) => (
     <svg
       width="20"
       height="20"
@@ -806,7 +804,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  productFour: (props: IconProps) => (
+  ProductFour: (props: IconProps) => (
     <svg
       width="24"
       height="24"

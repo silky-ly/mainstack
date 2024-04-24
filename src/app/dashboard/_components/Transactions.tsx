@@ -5,6 +5,7 @@ import { AppContextType } from "@/lib/context";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { EmptyData } from ".";
+import { features, status, times } from "./config";
 import { Icons } from "@/components/icons";
 import {
   Badge,
@@ -23,96 +24,29 @@ import {
   Skeleton,
 } from "@/components";
 
-const features = [
-  {
-    value: "deposit",
-    label: "Store Transactions",
-  },
-  {
-    value: "gettipped",
-    label: "Get Tipped ",
-  },
-  {
-    value: "withdrawal",
-    label: "Withdrawals",
-  },
-  {
-    value: "chargebacks",
-    label: "Chargebacks",
-  },
-  {
-    value: "cashbacks",
-    label: "Cashbacks",
-  },
-  {
-    value: "referandearn",
-    label: "Refer & Earn",
-  },
-];
-
-const status = [
-  {
-    value: "successful",
-    label: "Successful",
-  },
-  {
-    value: "pending",
-    label: "Pending",
-  },
-  {
-    value: "failed",
-    label: "Failed",
-  },
-];
-
-const times = [
-  {
-    title: "Today",
-  },
-  {
-    title: "Last 7 days",
-  },
-  {
-    title: "This month",
-  },
-  {
-    title: "Last 3 months",
-  },
-  {
-    title: "This year",
-  },
-  {
-    title: "Last year",
-  },
-  {
-    title: "All time",
-  },
-];
-
 export function Transactions({
   transactions,
   loading = false,
-}: {
+}: Readonly<{
   transactions?: AppContextType["transactions"];
   loading?: boolean;
-}) {
-  const [transactionType, setTransactionTypes] = useState<string[]>([]);
+}>) {
+  const [transactionType, setTransactionType] = useState<string[]>([]);
   const [transactionStatus, setTransactionStatus] = useState<string[]>([]);
-
-  const [isSheetOpen, toggleSheet] = useState<boolean>(false);
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
 
   const withFiltersAppliedTransactions = useMemo(() => {
     let found = transactions;
 
     if (transactionType?.length) {
       found = transactions?.filter((transaction) =>
-        transactionType?.includes(transaction?.type)
+        transactionType?.includes(transaction?.type),
       );
     }
 
     if (transactionStatus?.length) {
       found = transactions?.filter((transaction) =>
-        transactionStatus?.includes(transaction?.status)
+        transactionStatus?.includes(transaction?.status),
       );
     }
 
@@ -124,25 +58,25 @@ export function Transactions({
       <div className="flex justify-between">
         <div className="flex flex-col">
           <div className="inline-flex items-center">
-            <h3 className="text-2xl font-bold [letter-spacing:-0.6px] text-[#131316]">
+            <h3 className="text-2xl font-bold text-[#131316] [letter-spacing:-0.6px]">
               {loading ? (
-                <Skeleton className="h-3 mt-4 w-full" />
+                <Skeleton className="mt-4 h-3 w-full" />
               ) : (
                 withFiltersAppliedTransactions?.length
               )}{" "}
               Transactions
             </h3>
           </div>
-          <p className="text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]">
+          <p className="text-sm font-medium text-[#56616B] [letter-spacing:-0.2px]">
             Your transactions for the last 7 days
           </p>
         </div>
         <div className="flex">
-          <Sheet open={isSheetOpen} onOpenChange={toggleSheet}>
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger asChild>
               <Button
                 size={"lg"}
-                className="mr-3 items-center justify-center font-semibold rounded-full hover:bg-[#EFF1F6] text-[#131316] bg-[#EFF1F6]"
+                className="mr-3 items-center justify-center rounded-full bg-[#EFF1F6] font-semibold text-[#131316] hover:bg-[#EFF1F6]"
               >
                 Filter
                 {transactionType.length !== 0 ||
@@ -152,23 +86,23 @@ export function Transactions({
                     <Badge>{withFiltersAppliedTransactions?.length}</Badge>
                   </>
                 ) : null}
-                &nbsp; <Icons.expand />
+                &nbsp; <Icons.Expand />
               </Button>
             </SheetTrigger>
 
             <SheetContent className="rounded-3xl">
               <SheetHeader>
-                <SheetTitle className="mb-3 text-2xl font-bold [letter-spacing:-0.6px] text-[#131316]">
+                <SheetTitle className="mb-3 text-2xl font-bold text-[#131316] [letter-spacing:-0.6px]">
                   Filter
                 </SheetTitle>
 
-                <SheetDescription className="flex justify-between gap-3 overflow-scroll no-scrollbar">
+                <SheetDescription className="no-scrollbar flex justify-between gap-3 overflow-scroll">
                   {times.map((time) => (
                     <Button
                       key={time.title}
                       size={"sm"}
                       variant="outline"
-                      className="w-full px-[18px] text-sm font-semibold rounded-full hover:bg-[#EFF1F6] [letter-spacing:-0.4px] border-[0.5px] text-[#131316] border-[#EFF1F6]"
+                      className="w-full rounded-full border-[0.5px] border-[#EFF1F6] px-[18px] text-sm font-semibold text-[#131316] [letter-spacing:-0.4px] hover:bg-[#EFF1F6]"
                     >
                       {time.title}
                     </Button>
@@ -176,8 +110,8 @@ export function Transactions({
                 </SheetDescription>
               </SheetHeader>
 
-              <div className="mt-5 grid gap-5">
-                <div className="flex flex-col gap-2">
+              <div className="mt-5 w-full space-y-5 overflow-hidden">
+                <div className="flex w-full flex-col gap-2">
                   <Label
                     htmlFor="date-range"
                     className="text-base font-semibold text-[#131316] [letter-spacing:-0.4px]"
@@ -185,7 +119,7 @@ export function Transactions({
                     Date Range
                   </Label>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                     <DatePicker />
                     <DatePicker />
                   </div>
@@ -202,7 +136,7 @@ export function Transactions({
                   <MultiSelect
                     options={features}
                     selected={transactionType}
-                    onChange={setTransactionTypes}
+                    onChange={setTransactionType}
                   />
                 </div>
 
@@ -224,12 +158,12 @@ export function Transactions({
 
               <SheetFooter>
                 {/* sheet close. */}
-                <div className="w-full grid sm:grid-cols-2 gap-5">
+                <div className="grid w-full gap-5 sm:grid-cols-2">
                   <Button
                     type="submit"
                     size={"lg"}
                     variant="outline"
-                    className="w-full text-base font-semibold rounded-full [letter-spacing:-0.4px] border-[0.5px] hover:bg-transparent text-[#131316] border-[#EFF1F6]"
+                    className="w-full rounded-full border-[0.5px] border-[#EFF1F6] text-base font-semibold text-[#131316] [letter-spacing:-0.4px] hover:bg-transparent"
                   >
                     Clear
                   </Button>
@@ -237,8 +171,8 @@ export function Transactions({
                   <Button
                     type="submit"
                     size={"lg"}
-                    onClick={() => toggleSheet(false)}
-                    className="w-full text-base font-semibold rounded-full [letter-spacing:-0.4px] text-white bg-[#131316] hover:bg-[#131316]"
+                    onClick={() => setIsSheetOpen(false)}
+                    className="w-full rounded-full bg-[#131316] text-base font-semibold text-white [letter-spacing:-0.4px] hover:bg-[#131316]"
                   >
                     Apply
                   </Button>
@@ -249,9 +183,9 @@ export function Transactions({
 
           <Button
             size={"lg"}
-            className="items-center font-semibold rounded-full text-[#131316] bg-[#EFF1F6] hover:bg-[#EFF1F6]"
+            className="items-center rounded-full bg-[#EFF1F6] font-semibold text-[#131316] hover:bg-[#EFF1F6]"
           >
-            Export List &nbsp; <Icons.export />
+            Export List &nbsp; <Icons.Export />
           </Button>
         </div>
       </div>
@@ -259,8 +193,8 @@ export function Transactions({
       <Separator className="my-4" />
 
       {loading ? (
-        <div className="flex justify-center items-center mt-24">
-          <Icons.spinner
+        <div className="mt-24 flex items-center justify-center">
+          <Icons.Spinner
             className="h-26 w-26 animate-spin"
             data-testid="spinner"
           />
@@ -269,55 +203,53 @@ export function Transactions({
         <EmptyData />
       ) : (
         <div className="flex flex-col">
-          {withFiltersAppliedTransactions?.map(
-            (transaction: AppContextType["transactions"][0], index: number) => (
-              <div
-                key={`${index}-${transaction.amount}`}
-                className="flex justify-between mb-8"
-              >
-                <div className="flex">
-                  {transaction.type === "deposit" ? (
-                    <Icons.incoming />
-                  ) : (
-                    <Icons.outgoing />
-                  )}
-                  &nbsp; &nbsp;
-                  <div>
-                    <p className="text-base font-medium [letter-spacing:-0.2px] [word-spacing:1px] text-[#131316]">
-                      {transaction?.type === "deposit"
-                        ? transaction?.metadata?.product_name ||
-                          transaction?.metadata?.name
-                        : "Cash Withdrawal"}
-                    </p>
-                    <span
-                      className={cn(
-                        "text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]",
-                        transaction?.status === "successful" &&
-                          transaction?.type === "withdrawal" &&
-                          "text-[#0EA163]"
-                      )}
-                    >
-                      {transaction?.metadata?.name || transaction?.status}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="w-36 text-end">
-                  <p
-                    className="text-base font-bold [letter-spacing:-0.2px] text-[#131316]"
-                    data-testid={`usd-${index}`}
-                  >
-                    {`USD ${transaction?.amount}`}
+          {withFiltersAppliedTransactions?.map((transaction, index: number) => (
+            <div
+              key={`${index}-${transaction.amount}`}
+              className="mb-8 flex justify-between"
+            >
+              <div className="flex">
+                {transaction.type === "deposit" ? (
+                  <Icons.Incoming />
+                ) : (
+                  <Icons.Outgoing />
+                )}
+                &nbsp; &nbsp;
+                <div>
+                  <p className="text-base font-medium text-[#131316] [letter-spacing:-0.2px] [word-spacing:1px]">
+                    {transaction?.type === "deposit"
+                      ? transaction?.metadata?.product_name ||
+                        transaction?.metadata?.name
+                      : "Cash Withdrawal"}
                   </p>
-
-                  {/* convert date from 2022-3-03*/}
-                  <span className="text-sm font-medium [letter-spacing:-0.2px] text-[#56616B]">
-                    {format(new Date(transaction?.date), "PP").toString()}
+                  <span
+                    className={cn(
+                      "text-sm font-medium text-[#56616B] [letter-spacing:-0.2px]",
+                      transaction?.status === "successful" &&
+                        transaction?.type === "withdrawal" &&
+                        "text-[#0EA163]",
+                    )}
+                  >
+                    {transaction?.metadata?.name || transaction?.status}
                   </span>
                 </div>
               </div>
-            )
-          )}
+
+              <div className="w-36 text-end">
+                <p
+                  className="text-base font-bold text-[#131316] [letter-spacing:-0.2px]"
+                  data-testid={`usd-${index}`}
+                >
+                  {`USD ${transaction?.amount}`}
+                </p>
+
+                {/* convert date from 2022-3-03*/}
+                <span className="text-sm font-medium text-[#56616B] [letter-spacing:-0.2px]">
+                  {format(new Date(transaction?.date), "PP").toString()}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </section>

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { links, profiles } from "./config";
 import { Icons } from "@/components/icons";
 import {
   Avatar,
@@ -13,93 +14,27 @@ import {
   DropdownMenuLabel,
 } from "@/components";
 
-const links = [
-  {
-    to: "/",
-    title: "Home",
-    icon: <Icons.home />,
-  },
-  {
-    to: "/",
-    title: "Analytics",
-    icon: <Icons.analytics />,
-  },
-  {
-    to: "/dashboard",
-    title: "Revenue",
-    icon: <Icons.revenue />,
-  },
-  {
-    to: "/",
-    title: "CRM",
-    icon: <Icons.crm />,
-  },
-  {
-    to: "/",
-    title: "Apps",
-    icon: <Icons.apps />,
-  },
-];
-
-const profiles = [
-  {
-    to: "/",
-    title: "Settings",
-    icon: <Icons.settings />,
-  },
-  {
-    to: "/",
-    title: "Purchase History",
-    icon: <Icons.purchaseHistory />,
-  },
-  {
-    to: "/",
-    title: "Refer and Earn",
-    icon: <Icons.refer />,
-  },
-  {
-    to: "/",
-    title: "Integrations",
-    icon: <Icons.integrations />,
-  },
-  {
-    to: "/",
-    title: "Report Bug",
-    icon: <Icons.reportBug />,
-  },
-  {
-    to: "/",
-    title: "Switch Account",
-    icon: <Icons.switchAccount />,
-  },
-  {
-    to: "/",
-    title: "Sign Out",
-    icon: <Icons.signOut />,
-  },
-];
-
 export function Navbar({
   user,
-}: {
+}: Readonly<{
   user?: { first_name?: string; last_name?: string; email?: string };
-}) {
+}>) {
   const pathname = usePathname();
 
   return (
-    <div className="w-full h-14 mt-4 m-auto px-5 grid sm:grid-cols-4 items-center rounded-full shadow-md bg-white">
-      <Icons.logo data-testid="logo" className="col-span-1 cursor-pointer" />
+    <div className="m-auto mt-4 grid h-14 w-full items-center rounded-full bg-white px-5 shadow-md sm:grid-cols-4">
+      <Icons.Logo data-testid="logo" className="col-span-1 cursor-pointer" />
 
-      <div className="col-span-2 w-[88%] flex justify-evenly items-center">
+      <div className="col-span-2 flex w-[88%] items-center justify-evenly">
         {links.map((link, index) => (
           <Link
             key={link.title}
             data-testid={`nav-link-${index}`}
             href={link.to}
             className={cn(
-              "inline-flex gap-x-1 px-6 h-10 items-center mx-auto cursor-pointer text-sm text-center font-semibold tracking-tight ease-in duration hover:rounded-full hover:bg-[#EFF1F6] text-[#56616B]",
+              "duration mx-auto inline-flex h-10 cursor-pointer items-center gap-x-1 px-6 text-center text-sm font-semibold tracking-tight text-[#56616B] ease-in hover:rounded-full hover:bg-[#EFF1F6]",
               pathname === link.to &&
-                "bg-[#131316] text-white px-4 py-1.5 rounded-full hover:bg-[#131316]"
+                "rounded-full bg-[#131316] px-4 py-1.5 text-white hover:bg-[#131316]",
             )}
           >
             {link.icon}
@@ -108,41 +43,41 @@ export function Navbar({
         ))}
       </div>
 
-      <div className="w-full col-span-1 flex justify-end items-center gap-3">
-        <div className="w-1/6 flex justify-between items-center">
+      <div className="col-span-1 flex w-full items-center justify-end gap-3">
+        <div className="flex w-1/6 items-center justify-between">
           <Link href={"/"} data-testid="notifications">
-            <Icons.notification />
+            <Icons.Notification />
           </Link>
           <Link href={"/"} data-testid="chat">
-            <Icons.chat />
+            <Icons.Chat />
           </Link>
         </div>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="py-1 pl-[5px] pr-3 inline-flex items-center gap-2 rounded-full cursor-pointer bg-[#EFF1F6]">
+            <div className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#EFF1F6] py-1 pl-[5px] pr-3">
               <Avatar>
-                <AvatarFallback className="text-sm text-center font-semibold leading-4 [letter-spacing:-0.4px] text-[#F2F3F5]">
-                  {user?.first_name?.substring(0, 1)}
-                  {user?.last_name?.substring(0, 1)}
+                <AvatarFallback className="text-center text-sm font-semibold leading-4 text-[#F2F3F5] [letter-spacing:-0.4px]">
+                  {user?.first_name?.charAt(0)}
+                  {user?.last_name?.charAt(0)}
                 </AvatarFallback>
               </Avatar>
-              <Icons.menu />
+              <Icons.Menu />
             </div>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="py-4 px-3 shadow-sm border-t-0">
+          <DropdownMenuContent className="border-t-0 px-3 py-4 shadow-sm">
             <DropdownMenuLabel>
               <div className="flex gap-3">
                 <Avatar className="h-10 w-10">
-                  <AvatarFallback className="text-base text-center font-semibold leading-4 [letter-spacing:-0.4px] text-[#F2F3F5]">
+                  <AvatarFallback className="text-center text-base font-semibold leading-4 text-[#F2F3F5] [letter-spacing:-0.4px]">
                     {user?.first_name?.substring(0, 1)}
                     {user?.last_name?.substring(0, 1)}
                   </AvatarFallback>
                 </Avatar>
 
                 <div>
-                  <p className="text-base font-bold [letter-spacing:-0.2px] text-[#131316]">
+                  <p className="text-base font-bold text-[#131316] [letter-spacing:-0.2px]">
                     {user?.first_name} {user?.last_name}
                   </p>
                   <span className="text-xs font-medium tracking-tight text-[#56616B]">
@@ -160,7 +95,7 @@ export function Navbar({
                   data-testid={`profile-option-${index}`}
                 >
                   {profile.icon} &nbsp; &nbsp;
-                  <span className="text-sm text-bold [letter-spacing:-0.2px] text-[#131316]">
+                  <span className="text-bold text-sm text-[#131316] [letter-spacing:-0.2px]">
                     {profile.title}
                   </span>
                 </DropdownMenuItem>

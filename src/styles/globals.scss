@@ -84,14 +84,13 @@
     @apply min-h-screen;
 
     .sidebar {
-      @apply  w-[3%] min-h-[150px] inset-y-[30%] fixed left-3 min-h-fit flex flex-col justify-center items-center gap-3 px-2 py-3 shadow-sm rounded-full bg-white;
+      @apply  w-[3%] inset-y-[30%] fixed left-3 min-h-fit flex flex-col justify-center items-center gap-3 px-2 py-3 shadow-sm rounded-full bg-white;
       box-shadow: 0px 6px 12px 0px rgba(92, 115, 131, 0.08), 0px 4px 8px 0px rgba(92, 115, 131, 0.08);
     }
     }
 }
 
 @layer utilities {
-  @variants responsive {
     .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
@@ -99,5 +98,14 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
-  }
+
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

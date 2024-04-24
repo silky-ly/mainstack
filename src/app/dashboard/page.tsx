@@ -1,36 +1,27 @@
 "use client";
 
-import axios, { AxiosError } from "axios";
-import { Overview, Sidebar, Transactions } from "./_components";
 import useSWR from "swr";
+import axios, { AxiosError } from "axios";
+import { useMemo } from "react";
+import { Overview, Sidebar, Transactions } from "./_components";
 import { BASE_URL } from "@/constants";
 import { AppContextType } from "@/lib/context";
-import { useMemo } from "react";
 
 const fetcher = async (url: string) =>
   await axios.get(url).then((response) => response.data);
 
 export default function Page() {
-  const {
-    data: transactions,
-    error: transactionError,
-    isLoading: isTransactionsLoading,
-  } = useSWR<AppContextType["transactions"], AxiosError>(
-    `${BASE_URL}/transactions`,
-    fetcher
-  );
+  const { data: transactions, isLoading: isTransactionsLoading } = useSWR<
+    AppContextType["transactions"],
+    AxiosError
+  >(`${BASE_URL}/transactions`, fetcher);
 
-  const {
-    data: wallet,
-    error,
-    isLoading: isWalletLoading,
-  } = useSWR<AppContextType["wallet"], AxiosError>(
-    `${BASE_URL}/wallet`,
-    fetcher,
-    {
-      refreshInterval: 4000,
-    }
-  );
+  const { data: wallet, isLoading: isWalletLoading } = useSWR<
+    AppContextType["wallet"],
+    AxiosError
+  >(`${BASE_URL}/wallet`, fetcher, {
+    refreshInterval: 4000,
+  });
 
   const sortedTransactions = useMemo(
     () =>
@@ -40,9 +31,9 @@ export default function Page() {
           date: new Date(transaction.date),
         }))
         ?.toSorted(
-          (a: Record<string, any>, b: Record<string, any>) => b.date - a.date
+          (a: Record<string, any>, b: Record<string, any>) => b.date - a.date,
         ),
-    [transactions]
+    [transactions],
   );
 
   return (

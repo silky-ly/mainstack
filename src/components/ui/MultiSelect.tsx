@@ -1,22 +1,19 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-
 import { Check, X } from "lucide-react";
+import { Icons } from "../icons/icons";
 import {
   Button,
   Checkbox,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components";
-import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@/components";
-import { Icons } from "../icons/icons";
 
 export type OptionType = {
   label: string;
@@ -36,14 +33,13 @@ export function MultiSelect({
   onChange,
   className,
   ...props
-}: MultiSelectProps) {
+}: Readonly<MultiSelectProps>) {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const handleUnselect = (item: string): void => {
     onChange(selected.filter((i) => i !== item));
   };
 
-  // there's an issue with the overflow. when multi-select-input is selected, the arrow down becomes arrow up. a lot of glitch on the multi-select.
   return (
     <Popover open={open} onOpenChange={setOpen} {...props}>
       <PopoverTrigger asChild>
@@ -51,17 +47,18 @@ export function MultiSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn(
-            "w-full justify-between h-12 border border-[#EFF1F6] bg-[#EFF1F6]  px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-[3px] rounded-xl focus:ring-[#131316] focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1"
-          )}
           onClick={() => setOpen(!open)}
+          className={cn(
+            "h-12 w-full justify-between rounded-xl border border-[#EFF1F6] bg-[#EFF1F6] px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-[3px] focus:ring-[#131316] focus:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+          )}
         >
-          <div className="flex w-full">
+          <div className="no-scrollbar flex w-full overflow-x-auto">
             {selected.map((item) => (
               <div key={item} className="inline-flex items-center">
                 {options?.find((data) => data.value === item)?.label}
-                <button
-                  className="ml-1 mr-2 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+
+                <div
+                  className="ml-1 mr-2 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleUnselect(item);
@@ -74,11 +71,11 @@ export function MultiSelect({
                   onClick={() => handleUnselect(item)}
                 >
                   <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
-                </button>
+                </div>
               </div>
             ))}
           </div>
-          <Icons.arrowDown />
+          <Icons.ArrowDown />
         </Button>
       </PopoverTrigger>
 
@@ -94,26 +91,17 @@ export function MultiSelect({
                   onChange(
                     selected.includes(option.value)
                       ? selected.filter((item) => item !== option.value)
-                      : [...selected, option.value]
+                      : [...selected, option.value],
                   );
                   setOpen(true);
                 }}
               >
-                {/* <Check
-                  className={cn(
-                    "mr-2 h-4 w-4 bg-black text-white",
-                    selected.includes(option.value)
-                      ? "opacity-100"
-                      : "opacity-0"
-                  )}
-                /> */}
-
                 <Checkbox
                   id="terms"
                   checked={selected.includes(option.value)}
                 />
 
-                <span className="py-1 text-base font-semibold [letter-spacing:-0.4px] text-[#131316]">
+                <span className="py-1 text-base font-semibold text-[#131316] [letter-spacing:-0.4px]">
                   {option.label}
                 </span>
               </CommandItem>

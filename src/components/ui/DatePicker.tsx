@@ -2,10 +2,14 @@
 
 import * as React from "react";
 import { format } from "date-fns";
-
 import { cn } from "@/lib/utils";
-import { Button, Calendar } from "@/components/ui";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui";
+import {
+  Button,
+  Calendar,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui";
 import { Icons } from "../icons/icons";
 
 export function DatePicker() {
@@ -17,12 +21,12 @@ export function DatePicker() {
         <Button
           variant={"outline"}
           className={cn(
-            "w-full h-12 rounded-xl flex justify-between items-center text-left font-normal border-[#EFF1F6] bg-[#EFF1F6]",
-            !date && "text-muted-foreground"
+            "flex h-12 w-full items-center justify-between rounded-xl border-[#EFF1F6] bg-[#EFF1F6] text-left font-normal",
+            !date && "text-muted-foreground",
           )}
         >
           {date ? format(date, "PP") : <span>Pick a date</span>}
-          <Icons.arrowDown />
+          <Icons.ArrowDown />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

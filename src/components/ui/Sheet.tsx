@@ -3,7 +3,6 @@
 import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
 import { Icons } from "../icons/icons";
 
@@ -21,8 +20,8 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-10 bg-[#E8E8E8]/80 backdrop-blur-sm sm:backdrop-blur-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-      className
+      "fixed inset-0 z-10 bg-[#E8E8E8]/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 sm:backdrop-blur-none",
+      className,
     )}
     {...props}
     ref={ref}
@@ -46,7 +45,7 @@ const sheetVariants = cva(
     defaultVariants: {
       side: "right",
     },
-  }
+  },
 );
 
 interface SheetContentProps
@@ -65,8 +64,8 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       {children}
-      <SheetPrimitive.Close className="absolute right-4 top-6 p-1 rounded-full opacity-70 ring-offset-background transition-opacity hover:bg-[#EFF1F6] focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary">
-        <Icons.close />
+      <SheetPrimitive.Close className="absolute right-4 top-6 rounded-full p-1 opacity-70 ring-offset-background transition-opacity hover:bg-[#EFF1F6] focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <Icons.Close />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
     </SheetPrimitive.Content>
@@ -81,7 +80,7 @@ const SheetHeader = ({
   <div
     className={cn(
       "flex flex-col space-y-2 text-center sm:text-left",
-      className
+      className,
     )}
     {...props}
   />

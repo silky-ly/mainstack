@@ -1,11 +1,14 @@
-import { cn } from "@/lib/utils";
 import "@/styles/globals.scss";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
 export const metadata: Metadata = {
   title: "Mainstack",
   description: "Assessment",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 const degular = localFont({
@@ -47,13 +50,14 @@ const degular = localFont({
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
-        className={cn("min-h-screen antialiased font-sans", degular.variable)}
+        suppressHydrationWarning={true}
+        className={cn("min-h-screen font-sans antialiased", degular.variable)}
       >
         {children}
       </body>

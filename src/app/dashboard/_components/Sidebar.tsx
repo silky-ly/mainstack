@@ -1,4 +1,4 @@
-import { Icons } from "@/components/icons";
+import { sideIcons } from "./config";
 import {
   Tooltip,
   TooltipArrow,
@@ -7,32 +7,13 @@ import {
   TooltipTrigger,
 } from "@/components";
 
-const sideIcons = [
-  {
-    icon: <Icons.product data-testid="product-icon" />,
-    content: "Link in Bio",
-  },
-  {
-    icon: <Icons.productTwo data-testid="productTwo-icon" />,
-    content: "Store",
-  },
-  {
-    icon: <Icons.productThree data-testid="productThree-icon" />,
-    content: "Media Kit",
-  },
-  {
-    icon: <Icons.productFour data-testid="productFour-icon" />,
-    content: "Invoicing",
-  },
-];
-
 export function Sidebar() {
   return (
     <div className="sidebar">
       {sideIcons?.map((icons) => (
         <TooltipProvider key={icons.content}>
           <Tooltip>
-            <TooltipTrigger className="p-2 grayscale hover:grayscale-0 hover:rounded-full hover:bg-[#EFF1F6]">
+            <TooltipTrigger className="p-2 grayscale hover:rounded-full hover:bg-[#EFF1F6] hover:grayscale-0">
               {icons.icon}
             </TooltipTrigger>
             <TooltipContent className="">
