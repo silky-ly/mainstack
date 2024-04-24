@@ -17,11 +17,13 @@ export function DatePicker() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="">
         <Button
           variant={"outline"}
+          aria-expanded="false"
+          data-state="closed"
           className={cn(
-            "flex h-12 w-full items-center justify-between rounded-xl border-[#EFF1F6] bg-[#EFF1F6] text-left font-normal focus:border-[3px] focus:border-[#131316]",
+            "flex h-12 w-full items-center justify-between rounded-xl border-[#EFF1F6] bg-[#EFF1F6] text-left font-normal focus:border-[3px] focus:border-[#131316] focus:outline-none",
             !date && "text-muted-foreground",
           )}
         >
@@ -30,7 +32,7 @@ export function DatePicker() {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent side="bottom" align="start" className="w-[410px] p-0">
+      <PopoverContent side="bottom" align="start" className="p-0 sm:w-[410px]">
         <Calendar
           mode="single"
           selected={date}
